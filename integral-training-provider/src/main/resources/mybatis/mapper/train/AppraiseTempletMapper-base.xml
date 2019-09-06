@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+ * 模板-评价分类-评价指标树
+ * @author 严文文
+ * @version 0.0.2
+ * @since 0.0.2 2019-06-05 09:37:42
+-->
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.AppraiseTempletDao">
+    <resultMap id="BaseResultMap" type="com.dmsdbj.integral.training.entity.AppraiseTempletEntity">
+		<result column="id" property="id" jdbcType="CHAR"/>    
+		<result column="name" property="name" jdbcType="VARCHAR"/>    
+		<result column="type" property="type" jdbcType="TINYINT"/>    
+		<result column="parent_id" property="parentId" jdbcType="CHAR"/>    
+        <result column="weight" property="weight" jdbcType="INTEGER"/>
+		<result column="templet_id" property="templetId" jdbcType="CHAR"/>    
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR"/>    
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>    
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>    
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT"/>    
+    </resultMap>
+
+ <sql id="Base_Column_List">
+    id,
+    name,
+    type,
+    parent_id,
+    weight,
+    templet_id,
+    create_time,
+    update_time,
+    operator,
+    creator,
+    remark,
+    is_delete </sql>
+
+    <select id="queryTempletContent" resultType="com.dmsdbj.integral.training.entity.ext.TempletAppraiseDetailModel">
+        SELECT
+        t.*,
+        d.integral,
+        d.id AS detailId
+        FROM
+       tik_appraise_templet t
+        LEFT JOIN tik_appraise_detail d ON t.id = d.sub_templet_id
+        AND d.program_id = #{programId}
+        AND d.appraiser_id = #{appraiseredId}
+        and d.user_id = #{userId}
+        and d.is_delete = 0
+        WHERE
+        templet_id = in (select templet_id from tik_appraise_templet where name=#{programType})
+        AND t.is_delete = 0
+    </select>
+
+   <select id="queryParentTemplet" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from tik_appraise_templet where type=0 and is_delete=0
+   </select>
+
+     <select id="queryTemplateByTempalteId" resultType="com.dmsdbj.integral.training.entity.ext.TempletAppraiseDetailModel">
+         SELECT
+         <include refid="Base_Column_List"/>
+        FROM
+         tik_appraise_templet
+      WHERE
+	      templet_id = #{templetId}
+	  AND is_delete =0
+     </select>
+
+    <update id="updateNameById" parameterType="java.util.Map">
+        update tik_appraise_templet set name=#{name} where id =#{Id}
+    </update>
+
+    <update id="deleteTemplateById">
+         UPDATE tik_appraise_templet
+        SET is_delete = 1
+        WHERE
+	id IN  (SELECT id FROM( SELECT id FROM tik_appraise_templet WHERE is_delete = 0 AND  templet_id = #{templetId} )a)
+    </update>
+</mapper>

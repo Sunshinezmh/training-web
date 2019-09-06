@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<!-- 设置本地仓库路径 -->
+	<localRepository>/usr/share/maven/ref/repository</localRepository>
+
+	<!-- 设置发布 jar 包时的用户名及密 -->
+	<servers>
+		<server>
+			<id>dynamic-releases</id>
+			<username>admin</username>
+			<password>admin123</password>
+		</server>
+
+		<server>
+			<id>dynamic-snapshots</id>
+			<username>admin</username>
+			<password>admin123</password>
+		</server>		
+		<server>
+			<id>docker-hub</id>
+			<username>sunshine6688</username>
+			<password>zmh950821</password>
+			<configuration>
+				<email>18333640045@163.com</email>
+			</configuration>
+		</server>
+	</servers>
+
+	<!-- 设置 maven 的远程仓库为 nexus -->
+	<mirrors>
+		<mirror>
+			<id>nexus</id>
+			<mirrorOf>central</mirrorOf>
+			<name>nexus repository</name>
+			<url>http://192.168.22.50:8081/nexus/content/groups/dynamic-public</url>
+		</mirror>
+		
+	</mirrors>
+
+	<!-- 设置 central 的路径等，覆盖了maven module builder里面的central配置 -->
+	<profiles>
+		<profile>
+			<id>central</id>
+			<repositories>
+				<repository>
+					<id>central</id>
+					<name>Central</name>
+				    <url>http://192.168.22.50:8081/nexus/content/groups/dynamic-public</url>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<name>Central</name>
+				    <url>http://192.168.22.50:8081/nexus/content/groups/dynamic-public</url>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile> 
+	</profiles>
+
+
+	<activeProfiles> 
+		<activeProfile>central</activeProfile>
+	</activeProfiles>
+
+	<!-- 配置eclipse插件 -->
+	<pluginGroups>
+		<pluginGroup>org.mortbay.jetty</pluginGroup>	
+		<pluginGroup>org.codehaus.cargo</pluginGroup>
+		<pluginGroup>org.jvnet.hudson.tools</pluginGroup>
+	</pluginGroups>
+
+</settings>

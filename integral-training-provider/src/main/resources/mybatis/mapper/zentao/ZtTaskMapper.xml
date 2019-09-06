@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.zentao.ZtTaskDao">
+
+    <!--查询所有延期的同学以及项目-->
+    <select id="queryAllDelayTask" resultType="com.dmsdbj.integral.training.entity.ext.DelayTaskModel">
+        SELECT
+        u.realname as realName,
+        t.project,
+        t.NAME as projectName,
+        t.STATUS,
+        t.deadline as deadLine,
+        t.openedBy,
+        t.openedDate as realStarted
+        FROM
+        `zt_task` t
+        LEFT JOIN zt_user u ON t.openedBy = u.account
+        WHERE
+            <![CDATA[ t.deadline < CURDATE()
+            AND ( t.STATUS = 'doing' OR t.STATUS = 'wait' )
+            AND t.deadline <> '0000-00-00'
+            AND t.deleted = '0'
+            AND u.deleted = '0'
+        GROUP BY
+	      t.name
+        ORDER BY
+          t.openedBy]]>
+    </select>
+
+</mapper>

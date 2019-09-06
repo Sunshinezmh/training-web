@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+ * 培养计划项目表
+ * @author 智雪艳
+ * @version 0.0.2
+ * @since 0.0.2 2018-09-18 11:04:05
+-->
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.TrainingProgramDao">
+    <resultMap id="BaseResultMap" type="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+		<result column="id" property="id" jdbcType="CHAR"/>    
+		<result column="name" property="name" jdbcType="VARCHAR"/>    
+		<result column="level_id" property="levelId" jdbcType="CHAR"/>    
+		<result column="integral" property="integral" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>    
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR"/>    
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>    
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="level_order" property="levelOrder" jdbcType="TINYINT"/>
+    </resultMap>
+
+ <sql id="Base_Column_List">
+    id,
+    name,
+    level_id,
+    integral,
+    description,
+    type,
+    create_time,
+    creator,
+    update_time,
+    operator,
+    remark,
+    is_delete </sql>  
+     
+</mapper>

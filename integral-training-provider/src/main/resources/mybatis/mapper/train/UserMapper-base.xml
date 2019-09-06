@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+ * 积分用户表
+ * @author 严文文
+ * @version 0.0.2
+ * @since 0.0.2 2019-06-06 14:31:35
+-->
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.UserDao">
+    <resultMap id="BaseResultMap" type="com.dmsdbj.integral.training.entity.UserEntity">
+		<result column="id" property="id" jdbcType="CHAR"/>    
+		<result column="user_code" property="userCode" jdbcType="VARCHAR"/>    
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>    
+		<result column="level_id" property="levelId" jdbcType="VARCHAR"/>    
+        <result column="giving_weight" property="givingWeight" jdbcType="INTEGER"/>
+        <result column="giving_integral" property="givingIntegral" jdbcType="INTEGER"/>
+        <result column="integral" property="integral" jdbcType="INTEGER"/>
+        <result column="growth" property="growth" jdbcType="INTEGER"/>
+		<result column="is_permit_minus" property="isPermitMinus" jdbcType="TINYINT"/>    
+		<result column="tenant_id" property="tenantId" jdbcType="VARCHAR"/>    
+		<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>    
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>    
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR"/>    
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>    
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT"/>    
+		<result column="is_giving_self" property="isGivingSelf" jdbcType="TINYINT"/>    
+		<result column="is_look_self" property="isLookSelf" jdbcType="TINYINT"/>    
+    </resultMap>
+
+ <sql id="Base_Column_List">
+    id,
+    user_code,
+    user_name,
+    level_id,
+    giving_weight,
+    giving_integral,
+    integral,
+    growth,
+    is_permit_minus,
+    tenant_id,
+    image_url,
+    create_time,
+    creator,
+    update_time,
+    operator,
+    remark,
+    is_delete,
+    is_giving_self,
+    is_look_self </sql>  
+     
+</mapper>

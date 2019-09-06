@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: training-service
+spec:
+  selector:
+    app: training
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8070
+      targetPort: 8070
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-project
+  labels:
+    app: training
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training
+  template:
+    metadata:
+      labels:
+        app: training
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8070

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.TrainingLevelDao">
+
+    <!--
+         * 根据等级名称或者levelID查询等级
+         * @author 严文文
+         * @version 0.0.1
+         * @since 0.0.1 2018年11月14日11:26:58
+        -->
+    <select id="queryByLevelIdOrName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+
+        FROM tik_training_level
+        WHERE level_order=#{levelOrder} OR name=#{name}
+    </select>
+
+    <!--
+     * 查询所有等级
+     * @author 严文文
+     * @version 0.0.1
+     * @since 0.0.1 2018年11月14日11:27:23
+    -->
+    <select id="queryAll" resultType="com.dmsdbj.integral.training.api.model.TrainingLevelModel" >
+        SELECT
+       *
+        FROM tik_training_level
+        WHERE is_delete=0 ORDER BY level_order
+    </select>
+
+
+    <select id="queryAllLevel" resultType="com.dmsdbj.integral.training.api.model.TrainingLevelModel">
+        SELECT
+        a.id,
+        a.description,
+        a.level_order as  levelorderid,
+        CAST(CONCAT(a.level_order,'级') AS CHAR) as levelOrder,
+        a.name,
+        CAST(CONCAT(a.growth,'成长值') AS CHAR) as growth,
+        CAST(CONCAT(a.number_on,'人在此等级') AS CHAR) as numberon,
+        CAST(CONCAT(a.number_over,'人完成此等级')AS CHAR) as numberover
+        FROM tik_training_level a
+        WHERE a.is_delete=0 group by a.level_order
+    </select>
+
+    <select id="queryAllEntity" resultType="com.dmsdbj.integral.training.entity.TrainingLevelEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tik_training_level
+        WHERE is_delete=0
+    </select>
+
+    <select id="findByOrder" resultType="com.dmsdbj.integral.training.api.model.TrainingLevelModel">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tik_training_level
+        WHERE level_order = #{levelOrder} and is_delete=0
+    </select>
+
+
+
+</mapper>

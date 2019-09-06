@@ -1,0 +1,21 @@
+stages:
+- name: Build
+  steps:
+  - runScriptConfig:
+      image: maven:3-jdk-8
+      shellScript: |-
+        mkdir -p /root/.m2 && mv settings.xml /root/.m2/
+        mvn clean install
+- name: Publish
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: sunshine6688/training-web:${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: index.docker.io
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
+notification: {}

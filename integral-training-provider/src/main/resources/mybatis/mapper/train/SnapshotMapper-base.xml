@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+ * 培养计划英语快照表
+ * @author 严文文
+ * @version 0.0.2
+ * @since 0.0.2 2019-06-05 09:37:42
+-->
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.SnapshotDao">
+    <resultMap id="BaseResultMap" type="com.dmsdbj.integral.training.entity.SnapshotEntity">
+		<result column="id" property="id" jdbcType="CHAR"/>    
+		<result column="user_id" property="userId" jdbcType="CHAR"/>    
+		<result column="program_id" property="programId" jdbcType="CHAR"/>    
+		<result column="url" property="url" jdbcType="VARCHAR"/>    
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR"/>    
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>    
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>    
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT"/>    
+    </resultMap>
+
+ <sql id="Base_Column_List">
+    id,
+    user_id,
+    program_id,
+    url,
+    create_time,
+    update_time,
+    operator,
+    creator,
+    remark,
+    is_delete </sql>  
+     
+</mapper>

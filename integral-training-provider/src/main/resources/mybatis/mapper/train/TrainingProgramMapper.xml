@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.TrainingProgramDao">
+
+
+    <select id="queryProgramByLevelId" parameterType="String"
+            resultType="com.dmsdbj.integral.training.api.model.TrainingModel">
+      select * from tit_training_program p where is_delete=0 and level_id=#{id}
+   </select>
+
+    <select id="queryProgramByLevel" parameterType="String"
+            resultType="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+      select * from tit_training_program p where is_delete=0 and level_id=#{id}
+   </select>
+
+    <select id="queryProgram" resultType="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+         select * from tit_training_program p where is_delete=0 order by level_order ASC
+    </select>
+
+    <select id="queryAllProgram" resultType="com.dmsdbj.integral.training.api.model.TrainingModel">
+      SELECT * FROM  tit_training_program where is_delete=0;
+   </select>
+
+    <select id="queryProgramByuser" parameterType="String"
+            resultType="com.dmsdbj.integral.training.api.model.TrainingModel">
+     select p.*,u.is_finished
+     from tit_training_program p
+     LEFT JOIN(
+       select * from tit_training_user
+       where user_id=#{userId} and is_delete=0)as u
+    on p.id=u.program_id
+    where p.is_delete=0
+    order by is_finished desc
+    </select>
+    <select id="queryInfoByRemarks" resultType="com.dmsdbj.integral.training.entity.ext.DeployModel">
+        select * from tit_training_deploy where remark=#{remark} and is_delete=0
+    </select>
+
+    <!--TrainingProgramEntity queryByName(String programName);-->
+    <select id="queryByName" parameterType="String"
+            resultType="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+        select * from tit_training_program
+        where name=#{programName} and is_delete=0
+    </select>
+
+    <!-- 查询用户当前等级的中所有项目   -->
+    <select id="queryUserProgramByID" parameterType="String"
+            resultType="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+        SELECT p.*
+        FROM tit_training_program p
+        WHERE level_id IN ( SELECT level_id FROM tik_user WHERE id = #{userId} )
+    </select>
+
+    <!--  查询用户当前等级，自己进行的项目  -->
+    <select id="queryUserProjectByUserName" parameterType="string"
+            resultType="com.dmsdbj.integral.training.entity.ext.currentProjectModel">
+        SELECT a.root,a.name
+        FROM
+	    ( SELECT path FROM zt_module WHERE NAME = #{userName} ) t
+	    LEFT JOIN zt_module AS a ON a.path LIKE CONCAT( t.path, '%' )
+	    where deleted = '1' and grade = '3'
+        ORDER BY a.root
+    </select>
+
+    <select id="queryIntroductionByProjectName" parameterType="String"
+            resultType="com.dmsdbj.integral.training.entity.TrainingProgramEntity">
+        select * from tit_training_program
+        where name like CONCAT('%',#{projectName},'%') and is_delete=0
+    </select>
+
+    <!-- 查询用户完成的任务   -->
+    <select id="queryFinishTask" parameterType="String"
+            resultType="com.dmsdbj.integral.training.entity.ext.finishTaskModel">
+        select *
+        from zt_task
+        where status = 'done' and pri = '3' and openedBy
+        in ( select account from zt_user where realname = #{userName} )
+    </select>
+</mapper>

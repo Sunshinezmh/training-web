@@ -1,0 +1,74 @@
+---
+server:
+  port: 8070
+  servlet:
+    context-path: /training-web
+spring:
+  profiles: dev
+  application:
+    name: integral-training-provider
+  main:
+    allow-bean-definition-overriding: true
+  redis:
+    host: 192.168.22.60
+    port: 6379
+    database: 0
+    password:
+    timeout: 300000ms
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 500
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.dmsdbj.integral.training.entity
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+eureka:
+  client:
+    service-url:
+      #客户端注册进eureka服务列表内
+      defaultZone: http://192.168.22.247:9001/eureka/
+  instance:
+    prefer-ip-address: true
+
+info:
+  app.name: provider-dept-8001
+  company.name: www.tfjybj.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.22.67:8080/xxl-job-admin
+    executor:
+      appname: integral-training-job
+      ip:
+      port: 9992
+      logpath: /data/xxl-job/jobhandler
+      logretentiondays: -1
+    accessToken:
+
+fdfs:
+  so-timeout: 1500
+  connect-timeout: 600
+  tracker-list: 192.168.22.64:22122
+  replace-ip:
+    source: 192.168.22.64
+    dest: 192.168.22.64
+
+ribbon:
+  ConnectTimeout: 60000  # 连接超时时间
+  ReadTimeout: 60000 # 超时时间
+
+sso-access: true

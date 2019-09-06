@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+ * 评价记录汇总表
+ * @author 严文文
+ * @version 0.0.2
+ * @since 0.0.2 2019-06-05 09:37:42
+-->
+<mapper namespace="com.dmsdbj.integral.training.provider.dao.train.AppraiseResultDao">
+    <resultMap id="BaseResultMap" type="com.dmsdbj.integral.training.entity.AppraiseResultEntity">
+		<result column="id" property="id" jdbcType="CHAR"/>    
+		<result column="appraiser_id" property="appraiserId" jdbcType="CHAR"/>    
+		<result column="user_id" property="userId" jdbcType="CHAR"/>    
+		<result column="content" property="content" jdbcType="VARCHAR"/>    
+		<result column="total_socre" property="totalSocre" jdbcType="DOUBLE"/>    
+		<result column="templet_id" property="templetId" jdbcType="CHAR"/>    
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR"/>    
+		<result column="creator" property="creator" jdbcType="VARCHAR"/>    
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>    
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT"/>    
+		<result column="program_id" property="programId" jdbcType="CHAR"/>    
+    </resultMap>
+
+ <sql id="Base_Column_List">
+    id,
+    appraiser_id,
+    user_id,
+    content,
+    total_socre,
+    templet_id,
+    create_time,
+    update_time,
+    operator,
+    creator,
+    remark,
+    is_delete,
+    program_id </sql>  
+     
+</mapper>

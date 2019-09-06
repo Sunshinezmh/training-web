@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: integral-training-dev
+  namespace: tfjy-k8s
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: integral-training-dev
+    spec:
+      # nodeName: 192.168.22.141 #直接通过节点名称调度到指定节点
+      nodeSelector:
+        node: itoo
+      containers:
+      - name: integral-training-dev
+        image: reg.dynamicharbor.com/tfjy-k8s/integral-training-dev:1.0
+        imagePullPolicy: Always
+#        resources:
+#          requests:
+#            cpu: 500m
+        ports:
+        - containerPort: 8070
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integral-training-dev
+  namespace: tfjy-k8s
+spec:
+   ports:
+   - name: integral-training-dev
+     port: 30100
+     targetPort: 8070
+     nodePort: 30100
+   selector:
+     app: integral-training-dev
+   type: NodePort
